@@ -195,8 +195,6 @@ def main() -> None:
         format_func=label,
         index=0,
         label_visibility="visible",
-        bind="query-params",
-        key="post",
     )
 
     _render_frontmatter(selected)
