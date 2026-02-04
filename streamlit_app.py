@@ -184,17 +184,34 @@ def main() -> None:
     st.caption("Pick a post and read it with frontmatter details.")
 
     posts = _sort_posts(load_posts("v2"))
+    post_ids = [post.path.stem for post in posts]
+    post_by_id = {post.path.stem: post for post in posts}
 
     def label(post: Post) -> str:
         date_prefix = post.date or "Unknown date"
         return f"{date_prefix} — {post.title}"
 
+    raw_param = st.query_params.get("post")
+    if isinstance(raw_param, list):
+        raw_param = raw_param[0] if raw_param else None
+
+    selected_id = raw_param if raw_param in post_by_id else post_ids[0]
+
+    if st.query_params.get("post") != selected_id:
+        st.query_params["post"] = selected_id
+
+    def sync_query_params() -> None:
+        selected_post: Post = st.session_state["post_select"]
+        st.query_params["post"] = selected_post.path.stem
+
     selected = st.selectbox(
         "Post",
         options=posts,
         format_func=label,
-        index=0,
+        index=post_ids.index(selected_id),
         label_visibility="visible",
+        key="post_select",
+        on_change=sync_query_params,
     )
 
     _render_frontmatter(selected)
