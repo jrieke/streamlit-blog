@@ -7,6 +7,8 @@ authors:
 category: "Product"
 ---
 
+![Advanced theming hero](./app/static/images/2026-02-04-advanced-theming-in-streamlit/hero.png)
+
 If you’ve ever thought “I love Streamlit, but I want *my* app’s vibe,” this one’s for you. **Streamlit 1.44** ships **advanced theming**: a bigger, more expressive set of theming options in `.streamlit/config.toml`.
 
 👉 Fastest way to try it: add a `.streamlit/config.toml`, tweak a few keys, and rerun your app.
